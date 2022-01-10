@@ -1,0 +1,52 @@
+ng new todolist
+ng serve --host 0.0.0.0
+ng generate module auth
+ng generate module modules/auth
+ng generate module modules/auth --routing 
+ng g m modules/auth --routing
+
+// create component inside a modulo
+ng generate component modules/auth/components/LoginPage
+ng gc modules/auth/components/LoginPage
+
+
+// create component with routing module if its folder (task) exists
+// flat is when you don't want to generate a new folder or when it was created
+ng g m modules/task/Task --flat --routing 
+ng g c modules/task/pages/TaskPage -- flat
+
+// generate shared module
+ng g m shared --flat
+
+
+// create aliases in ts.config.json in compilerOptions add:
+    "paths": {
+      "@core/*": [
+        "src/app/core/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@modules/*": [
+        "src/app/modules/*"
+      ]
+    }
+
+// then in Auth and Task module import shared module
+import { SharedModule } from '@shared/shared.module';
+imports: [..., SharedModule],
+
+
+2.2 Defining data interfaces
+// create models folder in core folder
+// add interfaces in that folder
+import { UserInterface } from "./user.interface";
+export interface TaskInterface{
+    id: string | number,
+    title: string,
+    tags: Array<string>, // or string[]
+    user: UserInterface,
+    status: 'in progress' | 'completed' | 'wait'
+}
+
+2.3 Whats are routes and how to generate them
