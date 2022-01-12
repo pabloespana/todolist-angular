@@ -50,3 +50,43 @@ export interface TaskInterface{
 }
 
 2.3 Whats are routes and how to generate them
+<router-oulet> to acces all routes
+ng g c Test
+const routes: Routes = [{
+  path: '',   // "/"
+  component:HomeComponent 
+}];
+
+  {  //other route
+    path: 'users',
+    component: UsersComponent,
+  },
+  { // 404 and redirections
+    path: '**',
+    component: Page404Component, // or rediretTo : '/'
+  },
+
+  // In app template
+  <h1>My App</h1>
+  <ul>
+    <li><a routerLink="/">Home</a></li>
+    <li><a routerLink="/users">Users</a></li>
+  </ul>
+  <router-outlet></router-outlet>
+
+  2.4 child routes
+  const routes: Routes = [{
+    path: '',   // "/"
+    component:HomeComponent,
+    children: [
+      {
+        path: "one",
+        component: HomeChildOneComponent
+      },
+       {
+        path: "Two",
+        component: HomeChildTwoComponent
+      }
+    ]
+  }];
+
