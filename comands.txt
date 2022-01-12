@@ -90,3 +90,28 @@ const routes: Routes = [{
     ]
   }];
 
+2.5 Lazy Loading
+strategy to load routes on demand to get app optimization, cause angular by default
+load all routes, even routes that the user has not visited
+- In app-routing.module:
+const routes: Routes = [
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('@modules/auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
+    path: 'task',
+    loadChildren: () =>
+      import('@modules/task/task.module').then((m) => m.TaskModule),
+  },
+];
+
+- In the any module routing (ex. auth-routing.module.ts)
+
+const routes: Routes = [
+  {
+    path: 'login',
+    component: LoginPageComponent,
+  },
+];
