@@ -115,3 +115,58 @@ const routes: Routes = [
     component: LoginPageComponent,
   },
 ];
+
+2.6 Proteger rutas Guards - access only if user has a session
+There are four types of guards:
+
+Can activate (basic)
+
+  ng g guard core/guards/ValidateSession     -> choose CanActivate
+
+- In core/guards/ValidateSession
+  private cookie: string | null = null;
+  ...
+  canactivate(){
+    ...
+    return this.checkCookie();
+  }
+
+  private checkCookie(): boolean {
+    return this.cookie !== null;
+  }
+
+- In app-routing.module
+  import { ValidateSessionGuard } from '@core/guards/validate-session.guard';
+  const routes: Routes = [
+    {
+      path: 'auth',
+      loadChildren: () =>
+        import('@modules/auth/auth.module').then((m) => m.AuthModule),
+    },
+    {
+      path: 'task',
+      loadChildren: () =>
+        import('@modules/task/task.module').then((m) => m.TaskModule),
+      canActivate:[ValidateSessionGuard]
+    },
+  ];
+
+  - Redirect if there is no session
+  import {... Router ...} from '@angular/router';
+
+  constructor(private router: Router) {}
+
+  private checkCookie(): boolean {
+    if (this.cookie == null) {
+      this.router.navigate(['/', 'auth', 'login']);
+      return false;
+    }
+    return true;
+  }
+
+  
+2.7 Pipes (filtros)
+
+3.1 Reactive forms
+
+
